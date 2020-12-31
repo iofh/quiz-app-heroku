@@ -1,1 +1,1 @@
-web: gunicorn tournaments.wsgi --log-file -
+web: gunicorn tournament.wsgi --log-file -
