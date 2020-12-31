@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{# Tournament page which is used by past,ongoing,upcoming views#}
+{% block content %}   
+<table class="table">
+    
+        <th>
+            Name
+        </th>
+        <th>
+            Difficulty
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Start date
+        </th>
+        <th>
+            End date
+        </th>
+        {% if user.is_superuser %}
+        <th>
+            Modify
+        </th>
+        <th>
+            View questions
+        </th>
+        {% endif %}
+        {% if tournaments_ongoing is not None%}
+            {% if tournaments_ongoing %}
+                <th>
+                    Take Part in Tournament
+                </th>
+            {% else %}
+                <th>
+                    View High Score
+                </th>
+            {% endif %}               
+        {% endif %}  
+        
+    {% for tournament in tournaments%}
+    <tr>
+        <td>  
+            {{tournament.name}}
+        </td> 
+        <td>  
+            {{tournament.get_difficulty_display}}
+        </td> 
+        <td>  
+            {{tournament.get_category_display}}
+        </td> 
+        <td>  
+            {{tournament.start_date}}
+        </td> 
+        <td>  
+            {{tournament.end_date}}
+        </td> 
+        {% if user.is_superuser %}
+        <td>  
+            <a class="btn btn-primary" href="{% url 'tournament:edit_tournament' pk=tournament.id%}">Modify Tournaments</a></li>
+        </td>
+        <td>  
+            <a class="btn btn-primary" href="{% url 'tournament:tournament_question' tournament_id=tournament.id%}">View Questions</a></li>
+        </td>
+        {% endif %}
+        {% if tournaments_ongoing is not None%}
+            {% if tournaments_ongoing %}
+                <th>
+                    <a class="btn btn-primary" href="{% url 'tournament:start_tournament' tournament_id=tournament.id%}">Take part in Tournament</a></li>
+                </th>
+            {% endif %}  
+                <th>
+                    <a class="btn btn-primary" href="{% url 'tournament:highscore' tournament_id=tournament.id%}">View HighScore</a></li>
+                </th>
+                         
+        {% endif %} 
+    </tr>
+    {% endfor %}  
+</table>
+{% endblock content%}

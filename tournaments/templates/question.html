@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{# Question page that shows the questions for a tournament #}
+{% block content %}   
+{% if user.is_authenticated %}
+<table class="table">
+    
+        <th>
+            Question
+        </th>
+        <th>
+            Choice 1
+        </th>
+        <th>
+            Choice 2
+        </th>
+        <th>
+            Choice 3
+        </th>
+        <th>
+            Choice 4
+        </th>
+<form action="{% url 'tournament:results' tournament_id=tournament_id%}" method="post">
+    {% csrf_token %}
+    {% autoescape off %}
+    {% for question in questions%}   
+    <tr>
+        <td>  
+            {{question.question}}
+        </td> 
+        <td>  
+            <input type='radio' id='option1' name='{{question.id}}' value='{{question.choices1}}'>
+            {{question.choices1}}
+        </td> 
+        <td>  
+            <input type='radio' id='option2' name='{{question.id}}' value='{{question.choices2}}'>
+            {{question.choices2}}
+        </td> 
+        <td>  
+            <input type='radio' id='option3' name='{{question.id}}' value='{{question.choices3}}'>
+            {{question.choices3}}
+        </td> 
+        <td>  
+            <input type='radio' id='option4' name='{{question.id}}' value='{{question.choices4}}'>
+            {{question.choices4}}
+        </td> 
+    </tr>
+    {% endfor %}  
+    {% endautoescape  %}
+    <input type='submit' value='Click To Submit'>
+    </form>
+</table>
+{% else %}
+<p>
+    You do not have permission to view the questions
+</p>
+{% endif %}
+{% endblock content%}

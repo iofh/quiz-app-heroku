@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{# Questions quiz page#}
+{% block content %}   
+{% if user.is_superuser %}
+<table class="table">
+    
+        <th>
+            Question
+        </th>
+        <th>
+            Correct answer
+        </th>
+        <th>
+            Choices 1
+        </th>
+        <th>
+            Choices 2
+        </th>
+        <th>
+            Choices 3
+        </th>
+        <th>
+            Choices 4
+        </th>
+    
+    {% for question in questions%}
+    <tr>
+        <td>  
+            {{question.question}}
+        </td> 
+        <td>  
+            {{question.correct_answer}}
+        </td> 
+        <td>  
+            {{question.choices1}}
+        </td> 
+        <td>  
+            {{question.choices2}}
+        </td> 
+        <td>  
+            {{question.choices3}}
+        </td> 
+        <td>  
+            {{question.choices4}}
+        </td> 
+    </tr>
+    {% endfor %}  
+</table>
+{% else %}
+<p>
+    You do not have permission to view the questions
+</p>
+{% endif %}
+{% endblock content%}

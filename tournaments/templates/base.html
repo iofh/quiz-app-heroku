@@ -1,0 +1,43 @@
+<html>
+  {# Base template #}
+    {% block head %}
+        <head>      
+            <title>{% block title %}OpenTDB Tournament{% endblock %}</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            {% load static %}
+            <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+        </head>
+    {% endblock head%}
+    <body>
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+              <ul class="nav navbar-nav">
+                <li><a class="navbar-brand" href="{% url 'tournament:index' %}">OPENTDB</a></li>
+                {# Navigation bar#}
+                {% if user.is_authenticated %}
+                  <li><a href="{% url 'tournament:list_all_tournament' %}">View Tournaments</a></li>
+                  <li><a href="{% url 'tournament:list_ongoing_tournament' %}">View Ongoing Tournaments</a></li>
+                  <li><a href="{% url 'tournament:list_upcoming_tournament' %}">View Upcoming Tournaments</a></li>
+                  <li><a href="{% url 'tournament:list_past_tournament' %}">View Past Tournaments</a></li>
+                  {% if user.is_superuser %}
+                    <li><a  href="{% url 'tournament:create_tournament' %}">Create Tournament</a></li>
+                  {% endif %}
+                  <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                  <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
+                  <li><a class="navbar-link" href="{% url 'tournament:signup' %}">Sign Up</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        <div class="container">
+            <main>
+                {% block content %}
+                {% endblock content%}
+            </main>
+        </div> 
+    </body>
+</html>

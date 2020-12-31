@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{# Rusults page that is used to count the final score and give feedback to the user on the questions' answers#}
+{% block content %} 
+<h1>Final Score: {{correct_count}}/10</h1>
+<div class="container">
+    <div class="col-sm-8">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1>Incorrect Questions</h1>
+        </div>
+        <div class="col-sm-4" >
+            <h1>Correct Answer</h1>
+        </div>
+    </div>  
+    {% autoescape off %}
+        {% for ques in incorrect_match_question%}  
+            <div class="row" >
+                <div class="col-sm-4" >
+                    {{ques.question}}
+                </div>
+                <div class="col-sm-4" >
+                    {{ques.correct_answer}}
+                </div>
+            </div>  
+            <br>  
+        {% endfor %}       
+    </div>
+    <div class="col-sm-4" >
+        <h1>Your Answer</h1>
+        {% for ans in user_incorrect_answer%} 
+            <div class="row" >
+                {{ans}}
+            </div>
+            <br>
+        {% endfor %}
+    </div>  
+    {% endautoescape %}
+</div>
+
+{% endblock content%}

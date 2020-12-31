@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{# highscore page #}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    Average Score: {{average.score__avg}}
+    Total Taken: {{total_taken}}
+    {% if tour_play %}
+    <table class="table">
+        <th>
+            Name
+        </th>
+        <th>
+            Complete Date
+        </th>
+        <th>
+            Score
+        </th>
+    {% for tp in tour_play%}
+    <tr>
+        <td>
+            {{ tp.player }}
+        </td>
+        <td>
+            {{ tp.complete_date }}
+        </td>
+        <td>
+            {{ tp.score}}
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+        No score found
+    {% endif %}
+{% endblock %}
